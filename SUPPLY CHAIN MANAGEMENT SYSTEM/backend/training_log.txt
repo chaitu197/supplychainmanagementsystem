@@ -1,0 +1,179 @@
+🚀 Training AI Supply Chain ML Models...
+==========================================
+
+📊 Model 1/6: Demand Forecasting (inventory_forecast.csv - 73K rows)
+Loading data...
+Dataset shape: (73100, 15)
+Columns: ['Date', 'Store ID', 'Product ID', 'Category', 'Region', 'Inventory Level', 'Units Sold', 'Units Ordered', 'Demand Forecast', 'Price', 'Discount', 'Weather Condition', 'Holiday/Promotion', 'Competitor Pricing', 'Seasonality']
+Training set size: (58480, 18)
+Test set size: (14620, 18)
+Training XGBoost model...
+
+=== Model Performance ===
+Train MAE: 7.24
+Test MAE: 7.52
+Train RMSE: 8.39
+Test RMSE: 8.74
+Train R²: 0.9941
+Test R²: 0.9936
+Model saved to ../backend/models/demand_forecast_model.pkl
+
+✅ Demand Forecasting Model trained and saved!
+
+📊 Model 2/6: Supplier Scoring (supply_chain_master.csv - 3K rows)
+Loading data...
+Dataset shape: (3089, 22)
+Training set size: (2471, 18)
+Test set size: (618, 18)
+Class distribution: {1: 1560, 0: 1529}
+Training Random Forest model...
+
+=== Model Performance ===
+Training Set:
+              precision    recall  f1-score   support
+
+           0       1.00      0.98      0.99      1223
+           1       0.98      1.00      0.99      1248
+
+    accuracy                           0.99      2471
+   macro avg       0.99      0.99      0.99      2471
+weighted avg       0.99      0.99      0.99      2471
+
+ROC-AUC: 0.9992
+
+Test Set:
+              precision    recall  f1-score   support
+
+           0       0.51      0.46      0.48       306
+           1       0.51      0.56      0.54       312
+
+    accuracy                           0.51       618
+   macro avg       0.51      0.51      0.51       618
+weighted avg       0.51      0.51      0.51       618
+
+ROC-AUC: 0.4977
+
+=== Top 10 Important Features ===
+                       feature  importance
+0               price_per_unit    0.086840
+15               items_offered    0.081443
+14             items_requested    0.073937
+1                quality_score    0.072283
+11            avg_order_volume    0.068685
+6           lead_time_variance    0.066110
+17  supplier_reliability_score    0.057315
+9      demand_volatility_index    0.056557
+13         offer_validity_days    0.055391
+10     order_frequency_monthly    0.055322
+Model saved to ../backend/models/supplier_scoring_model.pkl
+
+✅ Supplier Scoring Model trained and saved!
+
+📊 Model 3/6: Route Optimization (vehicle_routing.csv - 4.5K rows)
+Loading data...
+Dataset shape: (4550, 13)
+Training set size: (3640, 11)
+Training Gradient Boosting model...
+
+=== Model Performance ===
+Train MAE: 1.2854
+Test MAE: 3.3961
+Train R²: 0.9998
+Test R²: 0.9931
+Model saved to ../backend/models/route_optimization_model.pkl
+
+✅ Route Optimization Model trained and saved!
+
+📊 Model 4/6: Walmart Sales Forecasting (walmart_sales.csv - 6.4K rows)
+Loading Walmart sales data...
+Dataset shape: (6435, 8)
+Traceback (most recent call last):
+  File "/Users/krishnachaitanya/Documents/SUPPLY CHAIN MANAGEMENT SYSTEM/backend/models/walmart_sales_forecast.py", line 111, in <module>
+    model.train("../../DATA SETS/walmart_sales.csv")
+  File "/Users/krishnachaitanya/Documents/SUPPLY CHAIN MANAGEMENT SYSTEM/backend/models/walmart_sales_forecast.py", line 47, in train
+    X = self.prepare_features(df)
+  File "/Users/krishnachaitanya/Documents/SUPPLY CHAIN MANAGEMENT SYSTEM/backend/models/walmart_sales_forecast.py", line 24, in prepare_features
+    data['Date'] = pd.to_datetime(data['Date'])
+  File "/Users/krishnachaitanya/Library/Python/3.9/lib/python/site-packages/pandas/core/tools/datetimes.py", line 1046, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+  File "/Users/krishnachaitanya/Library/Python/3.9/lib/python/site-packages/pandas/core/tools/datetimes.py", line 250, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+  File "/Users/krishnachaitanya/Library/Python/3.9/lib/python/site-packages/pandas/core/tools/datetimes.py", line 453, in _convert_listlike_datetimes
+    return _array_strptime_with_fallback(arg, name, utc, format, exact, errors)
+  File "/Users/krishnachaitanya/Library/Python/3.9/lib/python/site-packages/pandas/core/tools/datetimes.py", line 484, in _array_strptime_with_fallback
+    result, timezones = array_strptime(arg, fmt, exact=exact, errors=errors, utc=utc)
+  File "pandas/_libs/tslibs/strptime.pyx", line 530, in pandas._libs.tslibs.strptime.array_strptime
+  File "pandas/_libs/tslibs/strptime.pyx", line 351, in pandas._libs.tslibs.strptime.array_strptime
+ValueError: time data "19-02-2010" doesn't match format "%m-%d-%Y", at position 2. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+📊 Model 5/6: Retail Demand Prediction (retail_demand.csv - 169K rows)
+Loading retail demand data...
+Dataset shape: (169211, 11)
+Unique products: 2117
+Unique warehouses: 4
+Traceback (most recent call last):
+  File "/Users/krishnachaitanya/Documents/SUPPLY CHAIN MANAGEMENT SYSTEM/backend/models/retail_demand_prediction.py", line 137, in <module>
+    model.train("../../DATA SETS/retail_demand.csv")
+  File "/Users/krishnachaitanya/Documents/SUPPLY CHAIN MANAGEMENT SYSTEM/backend/models/retail_demand_prediction.py", line 64, in train
+    X = self.prepare_features(df)
+  File "/Users/krishnachaitanya/Documents/SUPPLY CHAIN MANAGEMENT SYSTEM/backend/models/retail_demand_prediction.py", line 26, in prepare_features
+    data['Date'] = pd.to_datetime(data['Date'], format='%d/%m/%Y')
+  File "/Users/krishnachaitanya/Library/Python/3.9/lib/python/site-packages/pandas/core/tools/datetimes.py", line 1046, in to_datetime
+    cache_array = _maybe_cache(arg, format, cache, convert_listlike)
+  File "/Users/krishnachaitanya/Library/Python/3.9/lib/python/site-packages/pandas/core/tools/datetimes.py", line 250, in _maybe_cache
+    cache_dates = convert_listlike(unique_dates, format)
+  File "/Users/krishnachaitanya/Library/Python/3.9/lib/python/site-packages/pandas/core/tools/datetimes.py", line 453, in _convert_listlike_datetimes
+    return _array_strptime_with_fallback(arg, name, utc, format, exact, errors)
+  File "/Users/krishnachaitanya/Library/Python/3.9/lib/python/site-packages/pandas/core/tools/datetimes.py", line 484, in _array_strptime_with_fallback
+    result, timezones = array_strptime(arg, fmt, exact=exact, errors=errors, utc=utc)
+  File "pandas/_libs/tslibs/strptime.pyx", line 530, in pandas._libs.tslibs.strptime.array_strptime
+  File "pandas/_libs/tslibs/strptime.pyx", line 351, in pandas._libs.tslibs.strptime.array_strptime
+ValueError: time data "1/13/2016" doesn't match format "%d/%m/%Y", at position 9. You might want to try:
+    - passing `format` if your strings have a consistent format;
+    - passing `format='ISO8601'` if your strings are all ISO8601 but not necessarily in exactly the same format;
+    - passing `format='mixed'`, and the format will be inferred for each element individually. You might want to use `dayfirst` alongside this.
+
+📊 Model 6/6: Supply Chain Demand Forecast (supplychain_demand.csv - 5K rows)
+Loading supply chain demand data...
+Dataset shape: (4999, 20)
+Training set size: (3999, 23)
+Training XGBoost model for supply chain demand...
+
+=== Supply Chain Demand Model Performance ===
+Train MAE: 29.65
+Test MAE: 48.18
+Train R²: 0.5735
+Test R²: -0.0323
+
+=== Top 10 Important Features ===
+                   feature  importance
+14           sales_revenue    0.056009
+17       store_type_Retail    0.054160
+22         category_Tables    0.053758
+10          economic_index    0.052830
+13     discount_percentage    0.052437
+9   competitor_price_index    0.051665
+6              sales_units    0.050152
+12                   price    0.049979
+21          category_Sofas    0.048489
+5               product_id    0.047804
+Model saved to ../backend/models/supplychain_demand_model.pkl
+
+✅ Supply Chain Demand Model trained and saved!
+
+==========================================
+✅ All 6 ML models trained successfully!
+
+📁 Models saved in: backend/models/
+   - demand_forecast_model.pkl
+   - supplier_scoring_model.pkl
+   - route_optimization_model.pkl
+   - walmart_sales_model.pkl
+   - retail_demand_model.pkl
+   - supplychain_demand_model.pkl
+
+🚀 To start the API server, run:
+   cd api && python3 main.py
