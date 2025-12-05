@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { mockData } from '../utils/mockData';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 const USE_MOCK_DATA = false; // Now using real backend API with ML models!
 
 // Generic API hook
